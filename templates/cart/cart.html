@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-md-8">
+	<div class="widget card">
+		<h1 class="widget-title fs-4 card-title fw-bold text-primary">Products In Yout Cart</h1>
+		<hr class="my-2">
+		<div class="card-body pt-0">
+			{% if cart|length == 0 %}
+			<div class="row  justify-content-between " id="cart-item-{{item.product.id}}">
+				<div class="col-auto col-md-12">
+					<div class="alert alert-info" role="alert">
+						<div class="text-center">
+							<div><h1><b><i class="bi bi-cart-x"></i></b></h1></div>
+							<div><h3><b>Your cart is empty</b></h3></div> 
+						</div>
+					  </div>
+				</div>
+			</div>
+			{% else %}
+				{% for item in cart %}
+					{% include 'cart/partial/cart_item.html'%}
+					
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+</div>
+<div class="col-md-3">
+	<div class="widget card shadow">
+		<h1 class="widget-title fs-4 card-title fw-bold text-primary">Summary</h1>
+		<hr class="my-2">
+		<div class="card-body pt-0">
+			<!-- <div class="row justify-content-between">
+				<div class="col-4">
+					<p class="mb-1"><b>Subtotal</b></p>
+				</div>
+				<div class="flex-sm-col col-auto">
+					<p class="mb-1"><b>${{ cart.get_total_cost }}</b></p>
+				</div>
+			</div>
+			<div class="row justify-content-between">
+				<div class="col">
+					<p class="mb-1"><b>Shipping</b></p>
+				</div>
+				<div class="flex-sm-col col-auto">
+					<p class="mb-1"><b>$0</b></p>
+				</div>
+			</div> -->
+			<div class="row justify-content-between">
+				<div class="col-4">
+					<p><b>Total</b></p>
+				</div>
+				<div class="flex-sm-col col-auto">
+					<p class="mb-1">
+						<b
+							hx-get="{% url 'cart:hx_cart_total' %}"
+                        	hx-trigger="update-menu-cart from:body"
+                        	hx-swap="innerHTML"
+						>{% include 'cart/partial/cart_total.html' %}
+						</b>
+					</p>
+				</div>
+			</div>
+			<hr class="my-0">
+		</div>
+		<div class="text-center mt-3">
+			<!-- <div class="form-check">
+				<input type="checkbox" name="remember" id="remember" class="form-check-input">
+				<label for="remember" class="form-check-label">Remember Me</label>
+			</div> -->
+			<a href="{% url 'cart:checkout' %}" class="btn btn-lg btn-primary ms-auto">
+				Checkout
+			</a>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

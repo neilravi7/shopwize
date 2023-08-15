@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}<link href="{% static 'css/table.css' %}" rel="stylesheet">{% endblock %}
+{% block content %}
+<!-- <h1 class="widget-title fs-4 card-title fw-bold text-primary">My Account</h1> -->
+<div class="col-md-3">
+	<div class="widget card shadow">
+		<h1 class="widget-title fs-4 card-title fw-bold text-primary">Profile</h1>
+		<hr class="my-2">
+		<div class="card-body pt-0">
+			<div class="row justify-content-between">
+				<div class="col-4">
+					<p class="mb-2"><b>Name</b></p>
+				</div>
+				<div class="flex-sm-col col-auto">
+					<p class="mb-2"><b>{{request.user.first_name}} {{request.user.last_name}}</b></p>
+				</div>
+			</div>
+			<div class="row justify-content-between">
+				<div class="col">
+					<p class="mb-2"><b>Email</b></p>
+				</div>
+				<div class="flex-sm-col col-auto">
+					<p class="mb-2"><b>{{request.user.email}}</b></p>
+				</div>
+			</div>
+			<div class="row justify-content-between">
+				<div class="col">
+					<p class="mb-2"><b>Phone</b></p>
+				</div>
+				<div class="flex-sm-col col-auto">
+					<p class="mb-2"><b>XXXXXXXXXX</b></p>
+				</div>
+			</div>
+			<hr class="my-0">
+		</div>
+	</div>
+</div>
+<div class="col-md-9">
+	<div class="widget card">
+		<h1 class="widget-title fs-4 card-title fw-bold text-primary">Orders</h1>
+		<hr class="my-2">
+
+		<div class="card bg-white m-b-30">
+			<div class="card-body new-user">
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th class="border-top-0">Order ID</th>
+								<th class="border-top-0">Email</th>
+								<th class="border-top-0">Paid</th>
+								<th class="border-top-0">Paid Amount</th>
+								<th class="border-top-0">Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for order in orders %}
+							<tr>
+								<td>
+									<a href="{% url 'order:order_details' order.order_display_id %}">{{order.order_display_id}}</a>
+								</td>
+								<td>{{order.email}}</td>
+								<td>{{order.paid}}</td>
+								<td>
+									{{order.paid_amount}}
+								</td>
+								<td>
+									{{order.status}}
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

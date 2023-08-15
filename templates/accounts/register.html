@@ -1,0 +1,121 @@
+{% extends 'auth_base.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="widget card shadow-lg">
+    <div class="card-body p-5">
+        <h1 class="widget-title fs-4 fw-bold mb-4 text-primary">Sign Up</h1>
+        <form method="POST"  class="needs-validation" novalidate="" autocomplete="off">
+            {% csrf_token %}
+            
+            <div class="form-floating mb-2">
+                {{form.email}}
+                <label class="mb-1 text-muted" for="{{form.email.auto_id}}">{{form.email.label}}</label>
+                <div class="invalid-feedback">
+                    Please enter a valid email address.
+                </div>
+            </div>
+
+            <div class="form-floating mb-2">
+                {{form.username}}
+                <label class="mb-1 text-muted" for="{{form.username.auto_id}}">{{form.username.label}}</label>
+                <div class="invalid-feedback">
+                    Please enter a valid username.
+                </div>
+            </div>
+
+            <div class="form-floating mb-2">
+                {{form.password1}}
+                <label class="mb-1 text-muted" for="{{form.password1.auto_id}}">{{form.password1.label}}</label>
+                <div class="invalid-feedback">
+                    Please enter a valid password.
+                </div>
+            </div>
+
+            <div class="form-floating mb-2">
+                {{form.password2}}
+                <label class="mb-2 text-muted" for="{{form.password2.auto_id}}">{{form.password2.label}}</label>
+                <div class="invalid-feedback">
+                    Please confirm your password.
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center">
+                <!-- {{form.agree}}
+                <label class="form-check-label" for="{{form.agree.id_for_label}}">
+                    I agree to the <a href="#">terms and conditions</a>
+                </label> -->
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="invalid-feedback">
+                                {{ error|escape }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    
+                    {% for error in form.non_field_errors %}
+                        <div class="invalid-feedback">
+                            {{ error|escape }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-lg btn-primary">
+                    Register    
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer py-3 border-0">
+        <div class="text-center">
+            Already have an account? <a href='{% url "accounts:login" %}' class="text-dark">Login</a>
+        </div>
+    </div>
+</div>
+
+<script>
+	// Enable form validation
+	function validatePassword() {
+	  var password1 = document.getElementById("id_password1").value;
+	  var password2 = document.getElementById("id_password2").value;
+  
+	  // Validate strength of password
+	  var strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+	  if (!strongRegex.test(password1)) {
+		alert("Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one digit.");
+		return false;
+	  }
+  
+	  // Validate matching of passwords
+	  if (password1 !== password2) {
+		alert("Passwords do not match.");
+		return false;
+	  }
+  
+	  return true;
+	}
+
+	(function() {
+	  'use strict';
+	  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+	  var forms = document.querySelectorAll('.needs-validation');
+  
+	  // Loop over them and prevent submission
+	  Array.prototype.slice.call(forms)
+		.forEach(function(form) {
+		  form.addEventListener('submit', function(event) {
+			if (!form.checkValidity() && !validatePassword()) {
+				event.preventDefault();
+				event.stopPropagation();
+			}
+			form.classList.add('was-validated');
+		  }, false);
+		});
+	})();
+
+  </script>
+  
+
+{% endblock %}

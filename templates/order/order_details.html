@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}<link href="{% static 'css/table.css' %}" rel="stylesheet">{% endblock %}
+{% block content %}
+<!-- <h1 class="widget-title fs-4 card-title fw-bold text-primary">My Account</h1> -->
+<div class="col-md-3">
+	<div class="widget card shadow">
+		<h1 class="widget-title fs-4 card-title fw-bold text-primary">Order Details</h1>
+		<hr class="my-2">
+		<div class="card-body pt-0">
+			<div class="row justify-content-between">
+				<div class="col-4">
+					<p class="mb-2"><b>Name</b></p>
+				</div>
+				<div class="flex-sm-col col-auto">
+					<p class="mb-2"><b>{{order.first_name}} {{order.user.last_name}}</b></p>
+				</div>
+			</div>
+			<div class="row justify-content-between">
+				<div class="col">
+					<p class="mb-2"><b>Email</b></p>
+				</div>
+				<div class="flex-sm-col col-auto">
+					<p class="mb-2"><b>{{order.email}}</b></p>
+				</div>
+			</div>
+			<div class="row justify-content-between">
+				<div class="col">
+					<p class="mb-2"><b>Phone</b></p>
+				</div>
+				<div class="flex-sm-col col-auto">
+					<p class="mb-2"><b>{{order.phone}}</b></p>
+				</div>
+			</div>
+            <div class="row justify-content-between">
+				<div class="col">
+					<p class="mb-2"><b>Order Price</b></p>
+				</div>
+				<div class="flex-sm-col col-auto">
+					<p class="mb-2"><b>{{order.price}}</b></p>
+				</div>
+			</div>
+            <div class="row justify-content-between">
+				<div class="col">
+					<p class="mb-2"><b>Paid</b></p>
+				</div>
+				<div class="flex-sm-col col-auto">
+					<p class="mb-2"><b>{{order.paid}}</b></p>
+				</div>
+			</div>
+            <div class="row justify-content-between">
+				<div class="col">
+					<p class="mb-2"><b>Paid Amount</b></p>
+				</div>
+				<div class="flex-sm-col col-auto">
+					<p class="mb-2"><b>{{order.paid_amount}}</b></p>
+				</div>
+			</div>
+            <div class="row justify-content-between">
+				<div class="col">
+					<p class="mb-2"><b>Order Status</b></p>
+				</div>
+				<div class="flex-sm-col col-auto">
+					<p class="mb-2"><b>{{order.status}}</b></p>
+				</div>
+			</div>
+			<hr class="my-0">
+		</div>
+	</div>
+</div>
+<div class="col-md-9">
+	<div class="widget card">
+		<h1 class="widget-title text-primary my-0">Order Items</h1>
+
+		<div class="card bg-white">
+			<div class="card-body new-user">
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th class="border-top-0"></th>
+								<!-- <th class="border-top-0">Item</th> -->
+								<th class="border-top-0">Quantity</th>
+								<th class="border-top-0">Price</th>
+								<!-- <th class="border-top-0">Status</th> -->
+							</tr>
+						</thead>
+						<tbody>
+							{% for item in order.items.all %}
+							<tr>
+								<th scope="row">
+                                    <div class="media align-items-center">
+                                      <a href="{% url 'products:details' item.product_id %}" class="avatar rounded-circle mr-3">
+                                        <img alt="{{item.product.name}}" src="{{item.product.get_product_image}}">
+                                      </a>
+                                      <div class="media-body">
+                                        <span class="mb-0 ms-2 text-sm">{{item.product.name}}</span>
+                                      </div>
+                                    </div>
+                                  </th>
+								<td>{{item.quantity}}</td>
+								<td>
+									{{item.price}}
+								</td>
+								
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

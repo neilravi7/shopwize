@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-xl-7">
+    <div class="widget card mb-0">
+        <h5 class="widget-title fs-5 card-title fw-bold text-primary">Shipping Details</h5>
+        <hr class="my-2">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="first-name" name="first_name"
+                            value="{{request.user.first_name}}" placeholder="First Name">
+                        <label for="first-name">First Name</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="last-name" name="last_name" placeholder="Last Name"
+                            value="{{request.user.last_name}}">
+                        <label for="last-name">Last Name</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="address" name="address" placeholder="Address">
+                        <label for="address">Address</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Zipcode">
+                        <label for="zipcode">Zipcode</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="city" name="city" placeholder="City/Place">
+                        <label for="city">City/Place</label>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="text-center">
+                <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+            </div> -->
+        </div>
+    </div>
+    <div class="card">
+        <h1 class="widget-title text-primary">Contact Details </h1>
+        <hr class="my-2">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+                            value="{{request.user.email}}">
+                        <label for="email">email</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone"
+                            value="{{request.user.phone}}">
+                        <label for="phone">Phone</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h1 class="widget-title text-primary">Payment Details</h1>
+        <hr class="my-2">
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="widget card shadow">
+        <h1 class="widget-title fs-4 card-title fw-bold text-primary">Summary</h1>
+        <hr class="my-2">
+        <div class="card-body pt-0">
+            <div class="row justify-content-between">
+                <div class="col-4">
+                    <p class="mb-1"><b>Subtotal</b></p>
+                </div>
+                <div class="flex-sm-col col-auto">
+                    <p class="mb-1"><b>${{ cart.get_total_cost }}</b></p>
+                </div>
+            </div>
+            <div class="row justify-content-between">
+                <div class="col">
+                    <p class="mb-1"><b>Shipping</b></p>
+                </div>
+                <div class="flex-sm-col col-auto">
+                    <p class="mb-1"><b>$0</b></p>
+                </div>
+            </div>
+            <div class="row justify-content-between">
+                <div class="col-4">
+                    <p><b>Total</b></p>
+                </div>
+                <div class="flex-sm-col col-auto">
+                    <p class="mb-1"><b>${{ cart.get_total_cost }}</b></p>
+                </div>
+            </div>
+            <div class="text-danger" id="errors">
+            </div>
+            <div class="text-center mt-3">
+                <button onclick="buy(event)" class="btn btn-lg btn-primary ms-auto">
+                    Confirm Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block scripts %}
+<script src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript">
+    let el = document.querySelector('#errors')
+
+    function validateForm(data) {
+        let errors = []
+
+        if (data.first_name === '') {
+            errors.push('First name is empty')
+        }
+
+        if (data.last_name === '') {
+            errors.push('Last name is empty')
+        }
+
+        if (data.email === '') {
+            errors.push('Email is empty')
+        }
+
+        if (data.phone === '') {
+            errors.push('Phone is empty')
+        }
+
+        if (data.address === '') {
+            errors.push('Address is empty')
+        }
+
+        if (data.zipcode === '') {
+            errors.push('Zipcode is empty')
+        }
+
+        if (data.place === '') {
+            errors.push('Place is empty')
+        }
+
+        if (errors.length > 0) {
+            let html = '<ul>';
+            
+            errors.forEach((error) => {
+                html += '<li>' + error + '</li>';
+            })
+
+            el.innerHTML = html + '</ul>';
+        } else {
+            el.innerHTML = '';
+        }
+
+        return errors
+    }
+
+    function buy(event) {
+        let inputs = document.querySelectorAll('input');
+        let data = {}
+        inputs.forEach(input => {
+            data[input.name] = input.value;    
+        });
+
+
+        let errors = validateForm(data)
+
+        if (errors.length) {
+            console.log('Errors', errors)
+        } else {
+            var stripe = Stripe('{{ pub_key }}')
+
+            fetch('/order/start_order/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify(data)
+            })
+            .then(function(response) {
+                return response.json()
+            })
+            .then(function(session) {
+                return stripe.redirectToCheckout({ sessionId: session.session.id })
+            })
+            .then(function(result) {
+                if (result.error) {
+                    alert(result.error.message)
+                }
+            })
+            .catch(function(error) {
+                console.log('Errors', error)
+            })
+        }
+        event.preventDefault();
+        return false;
+    }
+</script>
+{% endblock %}

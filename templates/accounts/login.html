@@ -1,0 +1,67 @@
+{% extends 'auth_base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+
+<div class="widget card shadow-lg">
+    <div class="card-body p-5">
+        <h1 class="widget-title fs-4 card-title fw-bold text-primary">Sign In</h1>
+        <form method="POST" class="needs-validation" novalidate="" autocomplete="off">
+            {% csrf_token %}
+			<div class="form-floating mb-3">
+                {{form.username}}
+                <label class="mb-2 text-muted" for="{{form.username.auto_id}}">{{form.username.label}}</label>
+                <div class="invalid-feedback">
+                    Email is invalid
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                {{form.password}}
+                <label class="mb-2 text-muted" for="{{form.password.auto_id}}">{{form.password.label}}</label>
+                <div class="invalid-feedback">
+                    Password is required
+                </div>
+            </div>
+            
+            <div class="d-flex align-items-center">
+                <!-- {{form.agree}}
+                <label class="form-check-label" for="{{form.agree.id_for_label}}">
+                    I agree to the <a href="#">terms and conditions</a>
+                </label> -->
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="invalid-feedback">
+                                {{ error|escape }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    
+                    {% for error in form.non_field_errors %}
+                        <div class="invalid-feedback">
+                            {{ error|escape }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <!-- <div class="d-flex align-items-center"> This code may be used letter--> 
+            <div class="text-center mt-3">
+                <!-- <div class="form-check">
+                    <input type="checkbox" name="remember" id="remember" class="form-check-input">
+                    <label for="remember" class="form-check-label">Remember Me</label>
+                </div> -->
+                <button type="submit" class="btn btn-lg btn-primary ms-auto">
+                    Login
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer py-3 border-0">
+        <div class="text-center">
+            Don't have an account? <a href='{% url "accounts:register" %}' class="text-dark">Create One</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

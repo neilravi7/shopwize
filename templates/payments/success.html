@@ -1,0 +1,41 @@
+{% extends 'auth_base.html' %}
+{% block title %}Payment |Success{% endblock %}
+{% block content %}
+<div class="widget card shadow-lg">
+    <div class="card-body p-5">
+        <div class="row  justify-content-between">
+            <div class="text-center text-success">
+                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor"
+                    class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                </svg>
+                <div class="my-3">
+                    <h3><b>Payment Successful</b></h3>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-between my-2">
+            <div class="col-4">
+                <p class="mb-1"><b>Subtotal</b></p>
+            </div>
+            <div class="flex-sm-col col-auto">
+                <p class="mb-1"><b>${{ cart.get_total_cost }}</b></p>
+            </div>
+        </div>
+        <div class="text-left mt-3">
+            
+            <a href="{% url 'accounts:my_account' %}" class="btn btn-lg btn-primary ms-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                  </svg> Go To Orders
+            </a>
+        </div>
+    </div>
+    <div class="card-footer py-3 border-0">
+        <!-- <div class="text-center">
+            Already have an account? <a href='{% url "accounts:login" %}' class="text-dark">Login</a>
+        </div> -->
+    </div>
+</div>
+{% endblock %}

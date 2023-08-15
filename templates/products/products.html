@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<div class="row justify-content-center">
+	{% for product in products %}
+	<div class="col-md-4 mb-5">
+		<div class="card h-100 shadow">
+			<!-- Product image-->
+			<img class="card-img-top" src="{{product.image}}" alt="{{product.name}}">
+			<!-- Product details-->
+			<div class="card-body p-4">
+				<div class="text-center">
+					<!-- Product name-->
+					<h5 class="fw-bolder">{{product.name}}</h5>
+					<!-- Product price-->
+					${{product.price}}
+				</div>
+			</div>
+			<!-- Product actions-->
+			<div class="card-footer">
+				<div class="text-center">
+					<a class="btn btn-outline-primary mt-auto" href="{{product.get_absolute_url()}}">View</a>
+					<button data-product="{{product.id}}" data-action="add"
+						class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock content %}
