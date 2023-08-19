@@ -16,4 +16,4 @@ def  send_email_token(sender , instance , created , **kwargs):
             send_account_activation_email(email , email_token)
 
     except Exception as e:
-        print(e)    
+        print(e)

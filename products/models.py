@@ -40,7 +40,7 @@ class Product(BaseModel):
         return self.name
     
     def get_product_image(self):
-        return f'https://dish-dispatch.s3.ap-southeast-1.amazonaws.com/{self.product_images.first().image}' 
+        return f'https://f005.backblazeb2.com/file/shopwize/{self.product_images.first().image}' 
 
     def get_absolute_url(self, *args, **kwargs):
         return reverse('products:details', kwargs={"slug":self.slug})

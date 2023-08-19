@@ -33,6 +33,20 @@ class UserCreationView(FormView):
 
         return response
     
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                if field == 'password2':
+                    messages.error(self.request, f"password: {error}")
+                else:
+                    messages.error(self.request, f"{field}: , {error}")
+
+                
+        # messages.error(
+        #     self.request, "There are errors in the registration form. Please correct them.")
+        return super().form_invalid(form)
+    
+    
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
             messages.error(
@@ -85,16 +99,25 @@ class UserLoginView(FormView):
             
             if next_url:
                 return redirect(next_url)
+            else:
+                return redirect(self.success_url)
             
-            return response
         else:
-            messages.error(
+            # This code in not executing but i leave it if somthing breaks
+            messages.warning(
                     self.request, f"Invalid Credientials ! "
                 )
-            
-            response = self.form_invalid(form)
-            return response
+            return self.render_to_response(
+                self.get_context_data(request=self.request, form=form))
     
+
+    def form_invalid(self, form):
+        name = 'john'
+        messages.error(self.request, f"Invalid Credientials ! ")
+        return self.render_to_response(
+            self.get_context_data(request=self.request, form=form))
+    
+
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
             messages.error(

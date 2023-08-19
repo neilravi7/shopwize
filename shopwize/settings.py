@@ -30,23 +30,23 @@ DEBUG = True #os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = []
 
-# AWS Configurations
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('S3_BUCKET_NAME')
-AWS_S3_REGION_NAME = os.environ.get('AWS_REGION')
-AWS_QUERYSTRING_AUTH = False
+# # AWS Configurations
+# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY')
+# AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = os.environ.get('S3_BUCKET_NAME')
+# AWS_S3_REGION_NAME = os.environ.get('AWS_REGION')
+# AWS_QUERYSTRING_AUTH = False
 
 # Email Backend
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_PORT = os.environ.get('EMAIL_PORT')
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
-SENDGRID_TRACK_CLICKS_OPTION = {'enable': False}
-EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
-DEFAULT_FROM_EMAIL = os.environ.get('FROM_EMAIL', default='neilravi21@gmail.com')
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = os.environ.get('EMAIL_HOST')
+# EMAIL_PORT = os.environ.get('EMAIL_PORT')
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+# SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
+# SENDGRID_TRACK_CLICKS_OPTION = {'enable': False}
+# EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+# DEFAULT_FROM_EMAIL = os.environ.get('FROM_EMAIL', default='neilravi21@gmail.com')
 
 # Stripe
 STRIPE_API_KEY_PUBLISHABLE = os.environ.get('STRIPE_API_KEY_PUBLISHABLE')
@@ -54,18 +54,18 @@ STRIPE_API_KEY_HIDDEN = os.environ.get('STRIPE_API_KEY_HIDDEN')
 
 # Application definition
 
-PROJECT_APPS = [
-    'accounts.apps.AccountsConfig',
-    'products.apps.ProductsConfig',
-    'shop.apps.ShopConfig',
-    'cart.apps.CartConfig',
-    'order.apps.OrderConfig',
-]
+# PROJECT_APPS = [
+#     'accounts.apps.AccountsConfig',
+#     'products.apps.ProductsConfig',
+#     'shop.apps.ShopConfig',
+#     'cart.apps.CartConfig',
+#     'order.apps.OrderConfig',
+# ]
 
 
-THIRD_PARTY_APPS = [
-    'storages',
-]
+# THIRD_PARTY_APPS = [
+#     'storages',
+# ]
 
 
 INSTALLED_APPS = [
@@ -75,7 +75,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-] + THIRD_PARTY_APPS + PROJECT_APPS
+    'accounts.apps.AccountsConfig',
+    'products.apps.ProductsConfig',
+    'shop.apps.ShopConfig',
+    'cart.apps.CartConfig',
+    'order.apps.OrderConfig',
+    #'storages',
+] #+ THIRD_PARTY_APPS + PROJECT_APPS
 
 
 MIDDLEWARE = [
@@ -111,7 +117,7 @@ ROOT_URLCONF = 'shopwize.urls'
 
 WSGI_APPLICATION = 'shopwize.wsgi.application'
 
-DEFAULT_FILE_STORAGE = 'shopwize.storage.ShopWizeS3Boto3Stoarage'
+# DEFAULT_FILE_STORAGE = 'shopwize.storage.ShopWizeS3Boto3Stoarage'
 
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -198,19 +204,19 @@ MEDIA_ROOT = BASE_DIR /'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# HTTP Strict Transport Security
-SECURE_HSTS_SECONDS = 86400
-SECURE_HSTS_PRELOAD = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# # HTTP Strict Transport Security
+# SECURE_HSTS_SECONDS = 86400
+# SECURE_HSTS_PRELOAD = True
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-# CSRF Protection
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# # CSRF Protection
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
-# The below line will ensure that your application redirects all non-HTTPS requests to HTTP.
-SECURE_SSL_REDIRECT = True
+# # The below line will ensure that your application redirects all non-HTTPS requests to HTTP.
+# SECURE_SSL_REDIRECT = True
 
-# Cross Site Scripting
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
+# # Cross Site Scripting
+# SECURE_BROWSER_XSS_FILTER = True
+# SECURE_CONTENT_TYPE_NOSNIFF = True
 
