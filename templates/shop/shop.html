@@ -20,18 +20,11 @@
 			<ul class="list-unstyled widget-list">
 				{% for category in categories %}
 				<li><a href="{% url 'shop:shop' %}?category={{category.slug|urlencode}}"
-						class="d-flex {% if active_category == category.slug %}active{% endif %}">{{category.name|title}} <small class="ml-auto">(0)</small></a></li>
+						class="d-flex {% if active_category == category.slug %}active{% endif %}">{{category.name|title}} <small class="ml-auto"></small></a></li>
 				{% endfor %}
 			</ul>
 		</div>
 	</div>
-	<!-- Side widget-->
-	<!-- <div class="card mb-4">
-		<div class="card-header">Side Widget</div>
-		<div class="card-body">You can put anything you want inside of these side widgets. They are easy
-			to
-			use, and feature the Bootstrap 5 card component!</div>
-	</div> -->
 </div>
 <div class="col-lg-9 border-left">
 	<!-- Product list -->
