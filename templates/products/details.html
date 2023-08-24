@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<section class="py-0">
+<section id="section-one" class="py-0">
+
     <div class="container">
         <div class="row gx-4 gx-lg-5 align-items-center">
             {% if product %}
                 <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{product.get_product_image}}" alt="...">
                 </div>
                 <div class="col-md-6">
+
                     <!-- <div class="small mb-1">SKU: BST-498</div> -->
                     <h1 class="display-5 fw-bolder">{{product.name}}</h1>
                     <div class="rating-wrap my-3">
@@ -16,7 +18,7 @@
                         <small class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> 154 orders </small>
                     </div>
                     <div class="fs-5 mb-5">
-                        <span class="text-decoration-line-through">$45.00</span>
+                        <!-- <span class="text-decoration-line-through">$45.00</span> -->
                         <span>${{product.price}}</span>
                     </div>
                     <p class="lead">{{product.description}}</p>
@@ -41,7 +43,7 @@
                         <!-- <button class="btn btn-primary flex-shrink-0 me-3" type="button"> 
                                 Buy Now
                             </button> -->
-                        <a 
+                        <a  id="add-cart"
                             href="#" 
                             class="btn btn-outline-success flex-shrink-0"
                             hx-get="{% url 'cart:add_to_cart' product.id %}"
@@ -169,5 +171,21 @@
     </div>
 </section>
 {% endblock %}
-{% block script %}
+{% block scripts %}
+<script type="text/javascript">
+    document.getElementById('add-cart').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default link behavior
+        
+        const alertDiv = document.createElement('div');
+        alertDiv.classList.add('alert', 'alert-success', 'alert-dismissible', 'fade', 'show');
+        alertDiv.role = 'alert';
+        
+        alertDiv.innerHTML = `
+            Item added to cart successfully
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        const targetElement = document.querySelectorAll('.col-md-6')[1];
+        targetElement.insertBefore(alertDiv, targetElement.firstChild);
+    });
+</script>
 {% endblock %}

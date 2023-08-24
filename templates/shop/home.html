@@ -7,13 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Shopwize</title>
+    <title>Shopwize | Home</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}">
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <style type="text/css">
+        .skeleton-loading {
+            background-color: #f0f0f0;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+
+            100% {
+                opacity: 0.5;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -43,18 +63,7 @@
                         </ul>
                     </li> -->
                     {% if request.user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">My</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <!-- <li><a class="dropdown-item" href="#!">All Products</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li> -->
-                            <li><a class="dropdown-item" href="{% url 'accounts:my_account' %}">Profile</a></li>
-                            <li><a class="dropdown-item" href="{% url 'accounts:my_account' %}">Orders</a></li>
-                        </ul>
-                    </li>
+                    <li class="nav-item"><a class="nav-link btn btn-outline-success" href="{% url 'accounts:my_account' %}">My Orders</a></li>
                     <li class="nav-item"><a class="ms-3 nav-link btn btn-outline-warning"
                             href="{% url 'accounts:logout' %}">Logout</a></li>
                     {% endif %}
@@ -75,7 +84,7 @@
             </div>
         </div>
     </header>
-    
+
     {% include 'alert.html' %}
     <!-- Section-->
     <section class="py-5">
@@ -90,7 +99,13 @@
     <!-- Footer-->
     <footer class="py-5 bg-dark">
         <div class="container">
-            <p class="m-0 text-center text-white">Copyright © Your Website 2023</p>
+            <h3 class="text-center text-white">Disclaimer</h3>
+            <p class="m-0 text-center text-white">The Learning Ecommerce Web App has been created solely for educational
+                purposes.</p>
+            <p class="m-0 text-center text-white">It does not involve actual commercial transactions, and no real
+                monetary transactions or sensitive information are processed within the application.</p>
+            <p class="m-0 text-center text-white">The project serves as a safe environment for experimenting with web
+                development concepts and techniques.</p>
         </div>
     </footer>
     <!-- Bootstrap core JS-->
@@ -100,6 +115,13 @@
     <script src="https://unpkg.com/htmx.org@1.9.0"
         integrity="sha384-aOxz9UdWG0yBiyrTwPeMibmaoq07/d3a96GCbb9x60f3mOt5zwkjdbcHFnKH8qls"
         crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function imageLoaded(imgElement) {
+            // Hide placeholder when the image is loaded
+            const placeholder = imgElement.previousElementSibling;
+            placeholder.style.display = 'none';
+        }
+    </script>
 
 
 
