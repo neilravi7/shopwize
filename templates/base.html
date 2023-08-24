@@ -53,9 +53,9 @@
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'shop:shop' %}">Shop</a></li>
 
                     {% if request.user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link btn btn-success" 
+                        <li class="nav-item"><a class="nav-link btn btn-outline-success" 
                             href="{% url 'accounts:my_account' %}">My Orders</a></li>
-                        <li class="nav-item"><a class="ms-3 nav-link btn btn-warning"
+                        <li class="nav-item"><a class="ms-3 nav-link btn btn-outline-warning"
                                 href="{% url 'accounts:logout' %}">Logout</a></li>
                     {% endif %}
                 </ul>
@@ -85,7 +85,12 @@
     <!-- Footer-->
     <footer class="py-5 bg-dark">
         <div class="container">
-            <p class="m-0 text-center text-white">Copyright © Your Website 2023</p>
+            <h3 class="text-center text-white">Disclaimer</h3>
+            <p class="m-0 text-center text-white">The shopwize project has been created solely for educational and learning purposes.</p>
+            <p class="m-0 text-center text-white">It does not involve actual commercial transactions, and no real
+                monetary transactions or sensitive information are processed within the application.</p>
+            <p class="m-0 text-center text-white">The project serves as a safe environment for experimenting with web
+                development concepts and techniques.</p>
         </div>
     </footer>
     <!-- Bootstrap core JS-->

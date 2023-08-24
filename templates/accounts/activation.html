@@ -1,0 +1,98 @@
+{% extends 'auth_base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+
+<div class="widget card shadow-lg">
+    <div class="card-body p-5">
+        <h1 class="widget-title fs-4 card-title fw-bold text-primary">Sign In</h1>
+        <form method="POST" class="needs-validation" novalidate="" autocomplete="off">
+            {% csrf_token %}
+            <div class="form-floating mb-3">
+                {{form.username}}
+                <label class="mb-2 text-muted" for="{{form.username.auto_id}}">{{form.username.label}}</label>
+                <div class="invalid-feedback">
+                    {% if form.username.errors %}
+                    {% for error in form.username.errors %}
+                    {{ error|escape }}
+                    {% endfor %}
+                    {% else %}
+                    Please enter a valid email address.
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                {{form.password}}
+                <label class="mb-2 text-muted" for="{{form.password.auto_id}}">{{form.password.label}}</label>
+                <div class="invalid-feedback">
+                    {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                    {{ error|escape }}
+                    {% endfor %}
+                    {% else %}
+                    Password is required.
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center">
+                {% if form.errors %}
+                {% for field in form %}
+                {% for error in field.errors %}
+                <div class="invalid-feedback">
+                    {{ error|escape }}
+                </div>
+                {% endfor %}
+                {% endfor %}
+
+                {% for error in form.non_field_errors %}
+                <div class="invalid-feedback">
+                    {{ error|escape }}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-lg btn-primary ms-auto" formnovalidate>
+                    Login
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer py-3 border-0">
+        <div class="text-center">
+            Don't have an account? 
+            {% if request.GET.next %}
+                <a href='{% url "accounts:register" %}?next={{ request.GET.next }}' class="text-dark">Create One</a>
+            {% else %}
+                <a href='{% url "accounts:register" %}' class="text-dark">Create One</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
+{% endblock %}
