@@ -33,7 +33,7 @@ class UserCreationView(FormView):
         response =  super().form_valid(form)
         
         messages.success(
-            self.request, f"Account created please verify your account! "
+            self.request, f"Account created please login to your account!"
         )
 
         return response

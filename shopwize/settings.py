@@ -46,7 +46,7 @@ ALLOWED_HOSTS = []
 # SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 # SENDGRID_TRACK_CLICKS_OPTION = {'enable': False}
 # EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
-# DEFAULT_FROM_EMAIL = os.environ.get('FROM_EMAIL', default='neilravi21@gmail.com')
+# DEFAULT_FROM_EMAIL = os.environ.get('FROM_EMAIL')
 
 # Stripe
 STRIPE_API_KEY_PUBLISHABLE = os.environ.get('STRIPE_API_KEY_PUBLISHABLE')
