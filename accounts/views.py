@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.contrib.auth import views as auth_view
 from django.contrib.messages.views import SuccessMessageMixin
 from order.models import Order
+from django.contrib.auth.decorators import login_required
 
 # from django.core.exceptions import PermissionDenied
 
@@ -23,7 +24,11 @@ class UserCreationView(FormView):
     def form_valid(self, form):
         user = form.save()
         # email confirmation
-        user.is_active = False
+
+        # for the reaseon of free trail of email services is over by default i have leave this parameter as true
+        # this means user did'nt get any email for activation.
+        # user will be already active
+        user.is_active = True
         user.save()
         response =  super().form_valid(form)
         
@@ -136,6 +141,7 @@ class UserLogout(SuccessMessageMixin, auth_view.LogoutView):
                 )
         return reverse_lazy('accounts:login')
 
+@login_required
 def my_account(request):
     orders = Order.objects.filter(user=request.user)
     return render(request, 'accounts/my_account.html', {"orders":orders})
